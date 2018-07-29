@@ -26,16 +26,13 @@ object NumPrintouts {
       .selectExpr("CAST(value AS STRING)")
       .as[String]
 
-
-    df.show()
-
-
-
     val eventsDS: Dataset[UserEvent] = df.as[UserEvent]
 
     val printouts: DataFrame = eventsDS.filter(_.action == "PRINT").groupBy("value").count()
 
-    val query: StreamingQuery = printouts.writeStream.outputMode(OutputMode.Complete())
+    val query = printouts
+      .writeStream
+      .outputMode(OutputMode.Complete)
       .format("console")
       .start()
 
