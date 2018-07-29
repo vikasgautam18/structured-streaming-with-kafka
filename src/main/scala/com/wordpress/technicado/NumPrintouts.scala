@@ -4,6 +4,10 @@ import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
 import Constants._
 import org.apache.spark.sql.streaming.{OutputMode, StreamingQuery}
 
+import scala.util.parsing.json.JSON
+
+
+
 object NumPrintouts {
 
   def main(args: Array[String]): Unit = {
@@ -26,7 +30,11 @@ object NumPrintouts {
       .selectExpr("CAST(value AS STRING)")
       .as[String]
 
-    val eventsDS: Dataset[UserEvent] = df.as[UserEvent]
+    val eventsDS: Dataset[UserEvent] = df.mapPartitions(iter => {
+      iter.map(str => {
+        JSON.parseRaw(str).asInstanceOf[UserEvent]
+      })
+    })
 
     val printouts: DataFrame = eventsDS.filter(_.action == "PRINT").groupBy("value").count()
 
