@@ -1,6 +1,6 @@
 package com.wordpress.technicado
 
-import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
+import org.apache.spark.sql.{DataFrame, Dataset, RelationalGroupedDataset, SparkSession}
 import Constants._
 import org.apache.spark.sql.streaming.{OutputMode, StreamingQuery}
 
@@ -36,7 +36,8 @@ object NumPrintouts {
       })
     })
 
-    val printouts: DataFrame = eventsDS.filter(_.action == "PRINT").groupBy("value").count()
+    val printouts =  eventsDS.filter(_.action == "PRINT")
+      .groupBy("action").count()
 
     val query = printouts
       .writeStream
