@@ -1,0 +1,34 @@
+### Scala template
+*.class
+*.log
+# sbt specific
+.cache
+.history
+.lib/
+dist/*
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+.project
+
+# Idea
+.idea
+*.iml
+.idea/*
+
+target/
+
+#Logging
+log*/
+
+metastore_db
+shared/
+src/main/resources/*-site.xml
+src/*/dev.scala
+*.scala.bak
+spark-warehouse
