@@ -22,6 +22,9 @@ object NumPrintouts {
       .option("subscribe", ConfigReader.getString(NP_KAFKA_TOPIC))
       .load()
     import spark.implicits._
+
+    df.show()
+
     val eventsDS: Dataset[UserEvent] = df.as[UserEvent]
 
     val printouts = eventsDS.filter(_.action == "PRINT").groupBy("value").count()
