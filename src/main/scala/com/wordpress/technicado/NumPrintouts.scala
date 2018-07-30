@@ -32,7 +32,7 @@ object NumPrintouts {
 
     val eventsDS: Dataset[UserEvent] = df.mapPartitions(iter => {
       iter.map(str => {
-        JSON.parseRaw(str).asInstanceOf[UserEvent]
+        JSON.parseRaw(str).get.asInstanceOf[UserEvent]
       })
     })
 
