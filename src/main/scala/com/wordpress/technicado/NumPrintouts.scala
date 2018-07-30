@@ -36,7 +36,7 @@ object NumPrintouts {
       })
     })
 
-    val printouts =  eventsDS.filter(_.action == "PRINT")
+    val printouts =  eventsDS
       .groupBy("action").count()
 
     val query = printouts
